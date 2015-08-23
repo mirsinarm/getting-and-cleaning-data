@@ -1,5 +1,3 @@
-setwd("~/Dropbox/Yale/Courses/2015-Summer/DataSpecialization/3_GettingCleaningData/getting-and-cleaning-data/")
-
 library(dplyr)
 library(tidyr)
 
