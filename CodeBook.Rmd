@@ -5,8 +5,19 @@ output: pdf_document
 
 ## The data
 
-The data in this exercise come from <http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones>.  The original authors who collected the data wanted to develop a method to use smartphone (specifically Samsung) gyrometers and accelerometers to calculate the number of steps that a smartphone owner walked each day.  They had 30 subjects, who each performed a variety of activities while having their motions tracked on the phone.  The goal is to use these data to develop an algorithm that will allow smartphone owners to track their steps with their phones.
+The data in this exercise come from <http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones>.  The original authors who collected the data wanted to develop a method to use smartphone (specifically Samsung) gyroscope and accelerometers to calculate the number of steps that a smartphone owner walked each day.  They had 30 subjects, who each performed a variety of activities while having their motions tracked on the phone.  The goal is to use these data to develop an algorithm that will allow smartphone owners to track their steps with their phones.
 
+## The transformations
+
+Each of the feature variables described above has been normalized to fall between -1 and 1; hence, there are no units associated with those variables.
+
+According to the codebook (features_info.txt in the data zip file) from the collectors of the original data:
+
+> The features selected for this database come from the accelerometer and gyroscope 3-axial raw signals tAcc-XYZ and tGyro-XYZ. These time domain signals (prefix 't' to denote time) were captured at a constant rate of 50 Hz. Then they were filtered using a median filter and a 3rd order low pass Butterworth filter with a corner frequency of 20 Hz to remove noise. Similarly, the acceleration signal was then separated into body and gravity acceleration signals (tBodyAcc-XYZ and tGravityAcc-XYZ) using another low pass Butterworth filter with a corner frequency of 0.3 Hz. 
+>
+> Subsequently, the body linear acceleration and angular velocity were derived in time to obtain Jerk signals (tBodyAccJerk-XYZ and tBodyGyroJerk-XYZ). Also the magnitude of these three-dimensional signals were calculated using the Euclidean norm (tBodyAccMag, tGravityAccMag, tBodyAccJerkMag, tBodyGyroMag, tBodyGyroJerkMag). 
+>
+> Finally a Fast Fourier Transform (FFT) was applied to some of these signals producing fBodyAcc-XYZ, fBodyAccJerk-XYZ, fBodyGyro-XYZ, fBodyAccJerkMag, fBodyGyroMag, fBodyGyroJerkMag. (Note the 'f' to indicate frequency domain signals).
 
 ## The variables
 
@@ -15,20 +26,114 @@ The complete data set includes 561 measurements of smartphone movements that for
 SubjectID : unique identifier for the subject; ranges from 1-30
 
 Condition : indicates whether the data belong to the training condition (used to develop the algorithms) or the testing condition (used to validate whether the algorithms work)
-     test
-     train
+     + test
+     + train
 
 Activity : identifies the type of activity
-     STANDING
-     SITTING
-     LAYING
-     WALKING
-     WALKING_DOWNSTAIRS
-     WALKING_UPSTAIRS
+     + STANDING
+     + SITTING
+     + LAYING
+     + WALKING
+     + WALKING_DOWNSTAIRS
+     + WALKING_UPSTAIRS
+
+The remaining columns are all feature variables, which are variables that describe the motion sensed by the smartphone's gyrometers or accelerometers.  Each is prefaced by either a "t" or an "f".  The "t" stands for "time" while the "f" stands for "frequency domain signal".  In order to avoid having extremely long variable names, I have left these as letters rather than spelling them out.
+
+Additionally, many variables end in an X, a Y, or a Z.  In each case, these letters refer to the axis (X, Y, or Z) in which that measurement was made.  I have grouped these below, as they all refer to same thing measured in a different axis.
+
+Many of the variables also are either averages or standard deviations of the same type of movement; I have also grouped those.
 
 
+**tBodyAccAverage_X, tBodyAccAverage_Y, tBodyAccAverage_Z
+tBodyAccStandDev_X, tBodyAccStandDev_Y, tBodyAccStandDev_Z**
+
+     The mean and standard deviations in each axis of the body acceleration.
+
+**tGravityAccAverage_X, tGravityAccAverage_Y, tGravityAccAverage_Z
+tGravityAccStandDev_X, tGravityAccStandDev_Y, tGravityAccStandDev_Z**
+
+     The mean and standard deviations in each axis of the acceleration due to gravity.
+
+**tBodyAccJerkAverage_X, tBodyAccJerkAverage_Y, tBodyAccJerkAverage_Z
+tBodyAccJerkStandDev_X, tBodyAccJerkStandDev_Y, tBodyAccJerkStandDev_Z**
+
+     The mean and standard deviations in each axis of the linear acceleration.
+
+**tBodyGyroAverage_X, tBodyGyroAverage_Y, tBodyGyroAverage_Z
+tBodyGyroStandDev_X, tBodyGyroStandDev_Y, tBodyGyroStandDev_Z**
+
+     The mean and standard deviation of angular velocity along each axis.
+
+**tBodyGyroJerkAverage_X, tBodyGyroJerkAverage_Y, tBodyGyroJerkAverage_Z
+tBodyGyroJerkStandDev_X, tBodyGyroJerkStandDev_Y, tBodyGyroJerkStandDev_Z**
+
+     The mean and standard deviations in each axis of the angular velocity.
+
+**tBodyAccMagAverage, tBodyAccMagStandDev**
+
+     The mean and standard deviations of the magnitude of body acceleration.
+
+**tGravityAccMagAverage, tGravityAccMagStandDev**
+
+     The mean and standard deviations of the magnitude of gravity acceleration.
+
+**tBodyAccJerkMagAverage, tBodyAccJerkMagStandDev**
+
+     The mean and standard deviation of the magnitude of linear acceleration of the body.
+
+**tBodyGyroMagAverage, tBodyGyroMagStandDev**
+
+     The mean and standard deviation of the magnitude of the angular velocity.
+
+**tBodyGyroJerkMagAverage, tBodyGyroJerkMagStandDev**
+
+     The mean and standard deviation of the magnitude of the body angular velocity
+     acceleration jerk.
 
 
-## The transformations
+The following variables are fast fourier transforms of the above variables.  The prefix "f" stands for "frequency domain signal".
 
-Each of the feature variables described above has been normalized to fall between -1 and 1; hence, there are no units associated with those variables.
+**fBodyAccAverage_X, fBodyAccAverage_Y, fBodyAccAverage_Z,
+fBodyAccStandDev_X, fBodyAccStandDev_Y, fBodyAccStandDev_Z,
+fBodyAccAverageFreq_X, fBodyAccAverageFreq_Y, fBodyAccAverageFreq_Z**
+
+     Fast fourier transforms of the mean, standard deviations, and mean frequency 
+     in each axis of the body acceleration.
+
+**fBodyAccJerkAverage_X, fBodyAccJerkAverage_Y, fBodyAccJerkAverage_Z,
+fBodyAccJerkStandDev_X, fBodyAccJerkStandDev_Y, fBodyAccJerkStandDev_Z,
+fBodyAccJerkAverageFreq_X, fBodyAccJerkAverageFreq_Y, fBodyAccJerkAverageFreq_Z**
+
+     Fast fourier transforms of the mean, standard deviations, and mean frequency 
+     in each axis of the linear acceleration jerk.
+
+**fBodyGyroAverage_X, fBodyGyroAverage_Y, fBodyGyroAverage_Z,
+fBodyGyroStandDev_X, fBodyGyroStandDev_Y, fBodyGyroStandDev_Z,
+fBodyGyroAverageFreq_X, fBodyGyroAverageFreq_Y, fBodyGyroAverageFreq_Z**
+
+     Fast fourier transforms of the mean, standard deviation, and mean frequency of 
+     angular velocity along each axis.
+     
+**fBodyAccMagAverage, fBodyAccMagStandDev, fBodyAccMagAverageFreq**
+
+     Fast fourier transforms of the mean, standard deviation, and mean frequency of 
+     the magnitude of body acceleration.
+
+**fBodyBodyAccJerkMagAverage, fBodyBodyAccJerkMagStandDev, 
+fBodyBodyAccJerkMagAverageFreq**
+
+     Fast fourier transforms of the mean, standard deviation, and mean frequency of 
+     the magnitude of linear acceleration jerk.
+
+**fBodyBodyGyroMagAverage, fBodyBodyGyroMagStandDev, 
+fBodyBodyGyroMagAverageFreq**
+
+     Fast fourier transforms of the mean, standard deviation, and mean frequency of 
+     the magnitude of angular velocity.
+
+**fBodyBodyGyroJerkMagAverage, fBodyBodyGyroJerkMagStandDev, 
+fBodyBodyGyroJerkMagAverageFreq**
+
+     Fast fourier transforms of the mean, standard deviation, and mean frequency of 
+     the magnitude of angular velocity jerk.
+
