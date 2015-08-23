@@ -4,7 +4,7 @@ title: "README.md"
 output: pdf_document
 ---
 
-The script run_analysis.R analyzes data from the smartphone accelerometers and gyroscopes.  See CodeBook.Rmd for more information about the data, the variables, and the tranformations on the variables.
+The script run_analysis.R cleans and summarizes data from the smartphone accelerometers and gyroscopes.  See CodeBook.Rmd for more information about the data, the variables, and the tranformations on the variables.
 
 The instructions suggested five steps to the analysis, so I followed those steps (more or less in order).
 
