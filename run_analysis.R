@@ -41,7 +41,7 @@ test_dat <- cbind(subject_test, Condition="test", y_test, X_test)
 train_dat <- cbind(subject_train, Condition="train", y_train, X_train)
 dat <- rbind(train_dat, test_dat) # merged data set
 
-### (2)  Extracts only the measurements on the mean and standard deviation for each measurement. 
+### (2)  Extract only the measurements on the mean and standard deviation for each measurement. 
 # It looks like -mean and -std indicate which column names contain the means and standard deviations for the measurements.
 # There are also some column names that say "meanFreq()".  
 std <- grep("-std", features[,2])
@@ -60,7 +60,7 @@ cols_to_keep <- sort(c(1, 2, 3, means+3, std + 3)) # the 1,2,3 at the beginning 
 tidy_dat <- dat[,cols_to_keep]
 
 
-### (3)  Uses descriptive activity names to name the activities in the data set
+### (3)  Use descriptive activity names to name the activities in the data set
 tidy_dat[tidy_dat$Activity == "1", "Activity"] <- as.character(activity_labels[1,2])
 tidy_dat[tidy_dat$Activity == "2", "Activity"] <- as.character(activity_labels[2,2])
 tidy_dat[tidy_dat$Activity == "3", "Activity"] <- as.character(activity_labels[3,2])
@@ -69,7 +69,7 @@ tidy_dat[tidy_dat$Activity == "5", "Activity"] <- as.character(activity_labels[5
 tidy_dat[tidy_dat$Activity == "6", "Activity"] <- as.character(activity_labels[6,2])
 
 
-### (4)  Appropriately labels the data set with descriptive variable names.
+### (4)  Appropriately label the data set with descriptive variable names.
 # Fix up the names of the variables:
 cleaner_names <- colnames(tidy_dat)
 cleaner_names <- gsub("-std\\(\\)", "StandDev", cleaner_names)
@@ -86,13 +86,13 @@ colnames(tidy_dat) <- cleaner_names
 write.table(tidy_dat, "step4_tidy_data.txt", sep="\t")
 
 
-### (5)  From the data set in step 4, creates a second, independent tidy data set with the
+### (5)  From the data set in step 4, create a second, independent tidy data set with the
 # average of each variable for each activity and each subject.
 
 # convert to long form:
-tidy_long <- gather(tidy_dat, Dimension, Value, -c(SubjectID:Activity)) # helpful to view the top of this dataframe
-by_activity_subject <- group_by(tidy_long, Activity, SubjectID, Dimension)
-tidy_summarized <- summarize(by_activity_subject, Averages = mean(Value))
+tidy_summarized <- gather(tidy_dat, Dimension, Value, -c(SubjectID:Activity)) %>% # converts to "long" format
+                   group_by(Activity, SubjectID, Dimension) %>% # groups include measurement type
+                   summarize(Averages = mean(Value)) # summarizes across all three groups
 
 write.table(tidy_summarized, "step5_tidy_summarized.txt", sep="\t", row.name=FALSE)
 
