@@ -1,0 +1,34 @@
+---
+title: "CodeBook.md"
+output: pdf_document
+---
+
+## The data
+
+The data in this exercise come from <http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones>.  The original authors who collected the data wanted to develop a method to use smartphone (specifically Samsung) gyrometers and accelerometers to calculate the number of steps that a smartphone owner walked each day.  They had 30 subjects, who each performed a variety of activities while having their motions tracked on the phone.  The goal is to use these data to develop an algorithm that will allow smartphone owners to track their steps with their phones.
+
+
+## The variables
+
+The complete data set includes 561 measurements of smartphone movements that form the basis for future analyses.  Additionally, each measurement corresponds to a subject in the experiment, an activity type, and a condition (the training or testing condition).  A list and brief explanation is below:
+
+SubjectID : unique identifier for the subject; ranges from 1-30
+
+Condition : indicates whether the data belong to the training condition (used to develop the algorithms) or the testing condition (used to validate whether the algorithms work)
+     test
+     train
+
+Activity : identifies the type of activity
+     STANDING
+     SITTING
+     LAYING
+     WALKING
+     WALKING_DOWNSTAIRS
+     WALKING_UPSTAIRS
+
+
+
+
+## The transformations
+
+Each of the feature variables described above has been normalized to fall between -1 and 1; hence, there are no units associated with those variables.
